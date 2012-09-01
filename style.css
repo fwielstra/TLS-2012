@@ -87,12 +87,22 @@ sup, sub {
  }
 
 /* The next 3 are exclusive to Lifestream 4 layout: (REMOVE COMMENT) */
+/* TODO: materia icon */
 #featured {
-	background: #051012;
+	background: #224545;
+ 	background: -moz-linear-gradient(#224545, #062E2E);
+	background: -o-linear-gradient(#224545, #062E2E);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#224545), to(#062E2E)); /* older webkit syntax */
+	background: -webkit-linear-gradient(#224545, #062E2E);
 	width: auto;
-	padding: 0 20px 0 20px; /* top right bottom left */
-	margin: 0 2% 2px 2%;
+	padding: 7px 30px 7px 20px; /* top right bottom left */
+	margin: 0 2% 20px 2%;
 	font-size: 12px;
+	color: #7FCFCF;
+}
+
+#featured .textwidget {
+	
 }
 
 /* Sidebar */
@@ -577,13 +587,15 @@ img[class*="align"], img[class*="wp-image-"], img {
 #access ul ul a {
   border-bottom: 1px dotted #051012;
 }
-/* main menu item hover */
 
+/* main menu heading style TODO: use images */
 #access>div>ul>li>a {
   font-family: "Trajan Pro";
   font-size: 1.3em;
   line-height: 2.7em;
 }
+
+/* main menu item hover */
 
 #access li:hover > a,
 #access ul ul :hover > a,
@@ -591,14 +603,8 @@ img[class*="align"], img[class*="wp-image-"], img {
 #access a:focus {
   background: #7CCACA;
   color:#123433;
-  border-bottom:0;
-  padding-bottom: 11px; /* base padding-bottom +1 to compensate for lack of border */
-
 }
 
-/* drop shadow fhtagn */
-#access ul ul {
-    -moz-box-shadow: 0px 4px 30px 1px #7CCACA;
-    -webkit-box-shadow: 4px 3px 30px 1px #7CCACA;
-    box-shadow: 0px 4px 30px 1px #7CCACA;
+#access ul.sub-menu li:hover > a {
+  border-bottom: 1px solid #7CCACA;
 }
