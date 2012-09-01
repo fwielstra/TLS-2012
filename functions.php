@@ -479,25 +479,30 @@
 		$numberofrows = mysql_num_rows($result);
 		$numberofcolumns = mysql_num_fields($result);
 		
+		echo '<ul class="forum-posts">';	
 		for ($i = 0; $i < $numberofrows; $i++) {
 			$row = mysql_fetch_row($result);
 			$postbody = substr($row[6], 0, 100);
 			// Preferably also strip the last empty space. And strip away IMG-tags etc
 			
-			$thread = '<a class="forum-thread" href="http://thelifestream.net/forums/showthread.php?goto=newpost&t=' . $row[0] . '">' . $row[1] . ' ></a>';
+			$thread = '<a class="forum-thread" href="http://thelifestream.net/forums/showthread.php?goto=newpost&t=' . $row[0] . '">' . $row[1] . '</a>';
 			$forum = '<a class="forum-forum" href="http://thelifestream.net/forums/forumdisplay.php?f=' . $row[2] . '">' . $row[3] . '</a>'; 
 			$user = '<a class="forum-user" href="http://thelifestream.net/forums/viewprofile.php?p=' . $row[4] . '">' . $row[5] . '</a> ';
 			/* echo(' <em>' . $postbody . '...</em> ');*/
 			$views = $row[7] . ' views, ';
 			$replies = $row[8] . ' replies';
 			
-			echo($user);
-			echo('<br />');
-			echo($thread);
-			echo('<br />');
-			echo($forum);
-			echo('<br /><br />');
+			echo '<li class="post">';
+			
+			//echo($user);
+			//echo('<br />');
+			echo("$thread in $forum");
+			//echo('<br />');
+			//echo($forum);
+			//echo('<br /><br />');
+			echo '</li>';
 		}
+		echo '</ul>';
 		
 		include('forumcallclose.php');
 	}
