@@ -384,12 +384,16 @@
 	
 	
 	// Display the tls_border div. Input: Text to be echoed on top of the border
-	function echo_tls_border($titleOnBorder) {
-		echo('<div class="tls_border">');
+	function echo_tls_border($titleOnBorder, $id = "") {
+		if (!empty($id)) {
+			echo '<div id="', $id, '" class="tls_border">';
+		} else {
+			echo('<div class="tls_border">');
+		}
 		echo('<p>' . $titleOnBorder . '</p>');
 		echo('</div>');
 	}
-	
+
 	// Function found on Internet. Added to be able to add the sidebar to single Posts ("blogposts") as it was
 	// removed as being default in Twenty Eleven - see The Lifestream 4 documentation for sauce
 	add_filter('body_class', 'fix_body_class_for_sidebar', 20, 2);
