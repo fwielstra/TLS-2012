@@ -353,20 +353,30 @@ img[class*="align"], img[class*="wp-image-"], img {
 }
 
 .frontpage-content-left {
-	float: left;
-	width: 60%;
 	margin: 3% 2% 0 2%;
 }
 
 .frontpage-content-right {
-	float: right;
-	width: 30%;
 }
 
 .frontpage-clear {
 	clear: both;
 }
 
+.frontpage-highlights {
+   clear:both;
+}
+.frontpage-highlights .frontpage-primary {
+   float:left;
+   width: 400px;
+   background-color: #080A0A;
+   border: 6px solid #001C1C;
+   border-top: 0;
+}
+
+.frontpage-highlights .frontpage-primary .frontpage-content {
+	padding: 5px 5px 5px 5px;
+}
 /* Previews */
 
 /* IMAGE */
