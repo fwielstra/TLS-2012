@@ -1,0 +1,604 @@
+/*
+Theme Name:     The Lifestream 4
+Theme URI:      http://fhtagn.thelifestream.net
+Description:    Child theme for the Twenty Eleven theme. Created to set up the Lifestream theme as a child to Twenty Eleven, which hopefully will be easier to integrate with Twenty Twelve when that time comes.
+Version:		4
+Author:         Fangu, based on TwentyEleven but also on TheLifestream 2.2 by Cthulhu
+Author URI: 	http://TheLifestream.net
+Template:       twentyeleven
+*/
+
+
+@import url("../twentyeleven/style.css");
+
+/*
+ * BASIC
+ */
+
+body {
+	/*font: Verdana, Arial, Sans-Serif;*/
+	background: #1C1D1D url('http://thelifestream.net/wp-content/themes/lifestream3/images/tlsbg2.gif') center;
+	color: #88888F;
+	margin: 0;
+	font: 14px Verdana, Sans-Serif;
+	line-height: 1.4;
+}
+
+li {
+	list-style-position: inside;
+}
+
+a {
+	color: #7FCFCF;
+}
+
+/*table {
+	border-bottom: 0;
+	border-collapse: separate;
+	border-spacing: 2px;
+}*/
+
+sub {
+	top: none;
+}
+
+sup, sub {
+	font-size: 12px;
+	height: 0;
+	line-height: 1;
+	position: relative;
+	vertical-align: baseline;
+}
+
+
+/* =Structure
+----------------------------------------------- */
+
+#page {
+	margin: auto; /* No margin to top of page */
+	max-width: 1024px; /* Sets width of the entire content */
+	background: #051012; /* Sets background color for all things contenty */
+}
+
+
+/* =Header
+----------------------------------------------- */
+
+#branding { 
+	border-top: none; /* Was: 2px solid #BBBBBB */
+	position: relative;
+	z-index: 9999;
+}
+
+.tls_border {
+	background: url('http://thelifestream.net/forums/images/tls_border.gif') center;
+	min-height:30px;
+    height:auto !important;
+    height:30px; 
+    padding-left: 10%;
+}
+
+.tls_border p { 
+	font-weight: bold;
+	margin-top: 0.5em;
+	margin-bottom: 0;
+	display: inline-block;
+	vertical-align: baseline;
+ }
+
+/* The next 3 are exclusive to Lifestream 4 layout: (REMOVE COMMENT) */
+#featured {
+	background: #051012;
+	width: auto;
+	padding: 0 20px 0 20px; /* top right bottom left */
+	margin: 0 2% 2px 2%;
+	font-size: 12px;
+}
+
+/* Sidebar */
+
+#sidebarleft {
+	float: left;
+	/* background: #00FF00;  Green */
+	/*margin-left: 240px;*/
+	width: 208px;
+	padding: 2px 5px 2px 5px;
+}
+
+#sidebarright {
+	float: right;
+	background: #00FF00; /* Green */
+	width: 190px;
+	margin: 1px 1px 1px 1px;
+}
+
+#primary {
+	/*float: none;*/
+	/*background: #ff9900;*/
+	/*width: 79%;*/
+	/*margin-left: -720px;*/
+	/*margin: 1px -50% 1px 1px; Removed after putting the normal sidebar back in */
+	/*padding: 0;*/
+	/*margin: 0 -17% 0 0;*/
+ }
+ 
+ .left-sidebar #secondary {
+ 	margin-left: 1%; /* We want the sidebar further left; was 7.6% */ 
+ }
+ 
+ .left-sidebar #primary { 
+	margin: 0px 0px 0px -26.4%; /* ...and the main content area too, was 0px 0px 0px -26.4% */
+ }
+ 
+ .left-sidebar #content { 
+	margin: 0px 1% 0px 25%; /* ...and the main content area too, was 0px 7.6% 0px 34% */
+	width: 65%; /* was 58.4% */
+ }
+ 
+
+/* For Pages - they believe they are singular even if the sidebar is in there, so must move the content field */
+.singular #content, .left-sidebar.singular #content {
+	margin: 0 2% 0 20%; /* top right bottom left */
+	position: relative;
+	width: auto;
+}
+ 
+ /* Width of entry field in at least singular pages */
+.singular .entry-header, .singular .entry-content, .singular footer.entry-meta, .singular #comments-title {
+	width: 95%;
+}
+
+/* Edit- link for at least singular pages */
+.singular .entry-meta .edit-link a {
+	left: 600px;
+	top: 20px;
+}
+
+/* Margin for entry field in at least singular pages */
+.singular.page .hentry { 
+	padding: 1.3em 0 0 0;
+}
+
+/* For page template Index Pages only */
+#indexpages {
+	margin: 20px 20% 0 -15%; /* top right bottom left */
+	position: relative;
+	width: auto;
+}
+
+ 
+
+/* Overriding Widget CSS for Widgets in Sidebar */
+
+.widget-title {
+	color: #666;
+	font-size: 10px;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	line-height: 2.6em;
+	text-transform: none;
+}
+
+ /* Widget areas = sidebar */
+
+.widget-area {
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.widget ul {
+	font-size: 15px;
+	margin: 0;
+}
+.widget ul ul {
+	margin-left: 1.5em;
+}
+.widget ul li {
+	color: #88888F; /* was: #777 */
+	font-size: 12px; /* was: 14px */
+	list-style: square url("http://thelifestream.net/forums/images/statusicon/subforum_new.gif");
+	list-style-position: inside;
+}
+.widget a {
+	color: #88888F; /* was not here; inherited */
+	font-weight: normal; /* was: bold */
+	text-decoration: none;
+}
+.widget a:hover,
+.widget a:focus,
+.widget a:active {
+	color: #88888F; /* was not here; inherited */
+	text-decoration: underline;
+}
+
+.widget .menu-content-information-container {
+	margin-left: 3px;
+}
+ 
+ 
+ /* Stuff taken out here */
+ 
+/* One column - as long as left sidebar is activated, will not apply */
+.one-column #page {
+	/*max-width: 1024px;*/
+}
+
+.one-column #content { 
+	/*width: 90%;*/
+}
+
+.singular #primary { 
+/*margin: 1px -50% 1px 1px; Removed after going back to original sidebar */
+ }
+
+#supplementary {
+	border: none;
+}
+
+#site-generator {
+	background: #051012;
+	color: #88888F;
+	border: none;
+}
+
+
+
+
+/* Content fonts and stuff */
+
+
+.singular .entry-title, .entry-title a {
+	font-size: 32px;
+	font-weight: normal;
+	color: #7FCFCF;
+}
+
+.entry-title, .entry-title a {
+	font-size: 32px;
+	font-weight: normal;
+	color: #7FCFCF;
+}
+
+.entry-title a:hover, .entry-title a:focus, .entry-title a:active {
+	color: #7FCFCF;
+}
+
+/* Image caption background */
+.wp-caption {
+	background: #051012;
+}
+
+img[class*="align"], img[class*="wp-image-"], img {
+	border: 0;
+}
+	
+	
+.entry-content h1, .entry-content h2, .comment-content h1, .comment-content h2 {
+	color: #7FCFCF;
+}
+
+.entry-content h1 {
+	font-size: 200%;
+}
+
+.entry-content h2 {
+	font-size: 150%;
+}
+
+.entry-content h3 {
+	font-size: 110%;
+}
+
+.entry-content h4 {
+	font-size: 100%;
+}
+
+
+/* Table cells */
+.entry-content td {
+	border: 1px solid #ddd;
+	padding: 2px 2px 2px 5px;
+}
+
+.entry-content table {
+	border-bottom: 0;
+	border: none;
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+
+
+
+
+
+
+/* 
+* CSS FOR FRONTPAGE-TEMPLATE CONTENT
+*/
+
+/* Outer wrapping */
+.frontpage-primary {
+	margin: 5px 4.5% 10px 4.5%; /* top right bottom left */
+	background: #051012;
+}
+	
+/* Inner wrapping - currently doesn't really do anything but can be utilized */
+.frontpage-content {
+	padding: 2% 0 0 0;
+}
+
+.frontpage-primary a,
+.frontpage-primary a:hover,
+.frontpage-primary a:focus,
+.frontpage-primary a:active {
+	color: #7FCFCF;
+}
+
+.frontpage-primary h1 {
+	font-size: 48px;	
+}
+
+.frontpage-primary h2 {
+	font-size: 20px;	
+}
+
+.frontpage-content-left {
+	float: left;
+	width: 60%;
+	margin: 3% 2% 0 2%;
+}
+
+.frontpage-content-right {
+	float: right;
+	width: 30%;
+}
+
+.frontpage-clear {
+	clear: both;
+}
+
+/* Previews */
+
+/* IMAGE */
+.previews-top-right {
+	float: left;
+	width: 48%;
+	margin: 0 2% 0 0; /* top right bottom left */
+	vertical-align: middle;
+}
+
+.previews-top-left h1  {
+	color: #88888F;
+	font-size: 32px;
+	line-height: 1.2em;
+	margin-bottom: 10px;
+}
+
+/* TEXT */
+.previews-top-left {
+	float: right;
+	width: 43%;
+	margin: 0 5% 0 0; /* top right bottom left */
+
+}
+
+.previews-stories-category {
+	color: #829a8b;
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	line-height: 1.3em;
+	margin-bottom: 0.5em;
+	text-transform: uppercase;
+}
+
+.previews-stories-category a {
+	color: #829a8b;
+}
+
+.previews-topstoryexcerpt {
+	font-size: 13px;
+	color: #829a8b;
+	line-height: 1.3em;
+	margin: 4% 0 2% 0;
+}
+
+.preview-topstory-related ul li { 
+	color: #88888F;
+	font-size: 12px;
+	line-height: 1.5em;
+	list-style: square inside url("http://thelifestream.net/forums/images/statusicon/subforum_new.gif");
+}
+
+.preview-topstory-related ul {
+	margin: 0px 0px 0 0;
+}
+
+.previews-top-right img { /* Make sure picture is resized */
+	/*height: auto;*/
+	width: 100%;
+	border-bottom: 1px solid #000000;
+}
+
+#previews-medium {
+}
+
+.previews-medium-title h1 {
+	font-size: 20px;
+}
+
+.previews-left {
+	float: left;
+	width: 31%; /* was: 60 */
+	margin: 0 3% 0 0;
+	padding: 0px; /* was all: 1.63em 0px */
+}
+
+.previews-middle {
+	float: left;
+	width: 31%;
+	margin: 0px;
+	padding: 0px;
+	margin: 0 3% 0 0;
+}
+
+.previews-right {
+	float: right;
+	width: 31%;
+	padding: 0px;
+	/*padding: 1.63em 0px 0px;*/
+	/*margin: 0 -40% 0 0*/
+}
+
+.previews-left img {
+	width: 100%;
+	border-bottom: 1px solid #000000;
+}
+
+.previews-middle img {
+	width: 100%;
+	border-bottom: 1px solid #000000;
+}
+
+.previews-right img {
+	width: 100%;
+	border-bottom: 1px solid #000000;
+}
+
+.previews-clear {
+	clear: both;
+}
+
+/* Forumpulls */
+
+.forum-user {
+	font-size: 14px;
+	font-style: italic;	
+}
+
+.forum-thread {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.forum-forum {
+	font-size: 12px;	
+}
+
+.single #author-info {
+   background: #f9f9f9;
+   border-top: 1px solid #ddd;
+   border-bottom: 1px solid #ddd;
+   margin: 2.2em 0% 0 0%;
+   padding: 20px 35.4%;
+}
+
+@media (max-width: 1000px) {
+	/* Simplify the basic layout */
+	
+	.frontpage-primary {
+		margin: 0;
+	}
+	
+	.previews-top-left {
+		float: right;
+		width: 40%;
+		margin: 0 0 0 0; /* top right bottom left */
+		color: #88888F;
+		font-size: 16px;
+		vertical-align: middle;
+	}
+
+	.previews-top-left h1  {
+		font-size: 24px;
+	}
+
+	.previews-top-right {
+		float: left;
+		width: 55%;
+		margin: 0 0 0 0; /* top right bottom left */
+	}
+		
+
+}
+
+@media (max-width: 650px) {
+	/* @media (max-width: 650px) Reduce font-sizes for better readability on smaller devices */
+	
+	.previews-top-left,
+	.previews-top-right {
+		float: none;
+		width: 100%;
+		margin: 0;
+	}
+	
+	.previews-top-left h1  {
+		font-size: 24px;
+	}
+	
+	.previews-left,
+	.previews-middle,
+	.previews-right {
+		float: none;
+		width: 100%;
+		margin: 0 0 5% 0;
+	}
+	
+}
+
+
+/* Main menu */
+
+#access {
+  /*background: #1E1E1E;*/
+  background: #222; /* Show a solid color for older browsers */
+  background: -moz-linear-gradient(#252525, #0a0a0a);
+  background: -o-linear-gradient(#252525, #0a0a0a);
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#252525), to(#0a0a0a)); /* older webkit syntax */
+  background: -webkit-linear-gradient(#252525, #0a0a0);
+  box-shadow: 0;
+  -moz-box-shadow:0;
+  -webkit-box-shadow:0;
+}
+
+#access div {
+  margin-top: 3px; /* prevents menu items overlapping with banner */
+}
+
+#access a {
+  color: #7FCFCF;
+}
+
+#access li.menu-item .sub-menu a {
+  background-color: #1E1E1E;
+  color: #7FCFCF;
+}
+
+#access ul ul a {
+  border-bottom: 1px dotted #051012;
+}
+/* main menu item hover */
+
+#access>div>ul>li>a {
+  font-family: "Trajan Pro";
+  font-size: 1.3em;
+  line-height: 2.7em;
+}
+
+#access li:hover > a,
+#access ul ul :hover > a,
+#access ul.sub-menu li:hover > a,
+#access a:focus {
+  background: #7CCACA;
+  color:#123433;
+  border-bottom:0;
+  padding-bottom: 11px; /* base padding-bottom +1 to compensate for lack of border */
+
+}
+
+/* drop shadow fhtagn */
+#access ul ul {
+    -moz-box-shadow: 0px 4px 30px 1px #7CCACA;
+    -webkit-box-shadow: 4px 3px 30px 1px #7CCACA;
+    box-shadow: 0px 4px 30px 1px #7CCACA;
+}
