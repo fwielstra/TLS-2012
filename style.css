@@ -89,6 +89,7 @@ sup, sub {
 /* The next 3 are exclusive to Lifestream 4 layout: (REMOVE COMMENT) */
 /* TODO: materia icon */
 #featured {
+
 	background: #224545;
  	background: -moz-linear-gradient(#224545, #062E2E);
 	background: -o-linear-gradient(#224545, #062E2E);
@@ -596,14 +597,6 @@ img[class*="align"], img[class*="wp-image-"], img {
 #access ul ul a {
   border-bottom: 1px dotted #051012;
 }
-
-/* main menu heading style TODO: use images */
-#access>div>ul>li>a {
-  font-family: "Trajan Pro";
-  font-size: 1.3em;
-  line-height: 2.7em;
-}
-
 /* main menu item hover */
 
 #access li:hover > a,
@@ -626,6 +619,11 @@ img[class*="align"], img[class*="wp-image-"], img {
   color: #7FCFCF;
 }
 
+.commentlist {
+  /* use moar width without moving avatars to the left */
+  width: 85%;
+  margin-left: 100px;
+}
 .commentlist > li.comment {
   background-color: #051012;
   border: 1px solid #001C1C;
@@ -673,12 +671,34 @@ a.comment-reply-link:hover {
   color: #88888F;
   background-color: #081517;
   border: 1px solid #88888F;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }
 
 /* not sure what to do with these atm */
 #respond .comment-form-author label, #respond .comment-form-email label, #respond .comment-form-url label, #respond .comment-form-comment label {
-  color: #88888F;
-  background-color: #080A0A;
+  color: #7FCFCF;
+  background-color: #1E1E1E;
+  border: 1px solid #001C1C;
+  border-radius: 3px;
+  -webkit-box-shadow:none;
+  -moz-box-shadow:none;
+  box-shadow:none;
+  top:41px;
 }
 
+#respond input#submit {
+  background-color: #1E1E1E;
+  color: #7FCFCF;
+  border: 1px solid #001C1C;
+  border-radius: 3px;
+}
+
+#respond input#submit:hover, #respond input#submit:active {
+  background-color: #7CCACA;
+  color: #123433;
+  border: 1px solid #001C1C;
+  border-radius: 3px;
+}
 
