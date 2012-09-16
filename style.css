@@ -617,3 +617,68 @@ img[class*="align"], img[class*="wp-image-"], img {
 #access ul.sub-menu li:hover > a {
   border-bottom: 1px solid #7CCACA;
 }
+
+/* COMMENTS */
+
+/* comment listing */
+
+#comments #comments-title {
+  color: #7FCFCF;
+}
+
+.commentlist > li.comment {
+  background-color: #051012;
+  border: 1px solid #001C1C;
+}
+
+/* nested comment */
+
+.commentlist .children > li.bypostauthor {
+  background-color: #051012;
+  border-color: #001C1C;
+}
+
+.commentlist > li::before, .commentlist > li.bypostauthor::before {
+  content: url('images/comment-arrow-tls.png');
+}
+
+/* reply button */
+
+a.comment-reply-link {
+  background-color: #1E1E1E;
+  color: #7FCFCF;
+  border: 1px solid #001C1C;
+  border-radius: 3px;
+}
+
+a.comment-reply-link:hover {
+  background-color: #7CCACA;
+  color: #123433;
+}
+
+/* comment form */
+
+#respond {
+   background-color: #051012;
+   border:0;
+   width: 95%
+}
+
+#comments #reply-title {
+  color: #7FCFCF;
+}
+
+
+#respond input[type="text"], #respond textarea {
+  color: #88888F;
+  background-color: #081517;
+  border: 1px solid #88888F;
+}
+
+/* not sure what to do with these atm */
+#respond .comment-form-author label, #respond .comment-form-email label, #respond .comment-form-url label, #respond .comment-form-comment label {
+  color: #88888F;
+  background-color: #080A0A;
+}
+
+
