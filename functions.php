@@ -143,27 +143,6 @@
 		}
 	}
 	
-	// Get the first image of a poast
-	/*function get_featured_image_medium ($postID) {
-		
-		$args = array(
-		'post_type' => 'attachment',
-		'numberposts' => null,
-		'post_status' => null,
-		'post_parent' => $postID
-		);
-
-		$attachments = get_children($args);
-		
-		if ($attachments) {
-			foreach ($attachments as $attachment) { // Loop does this for all attachments in $attachments
-				$first_image = wp_get_attachment_medium_url($attachment->ID);
-			}
-			return $first_image[0];*/
-			
-		//} // Else we have no attachments, should call get_first_img() here
-	//}
-	
 	// Returns the URL of the first image of a post in medium size
 	function get_first_post_image_medium ($postID) {
 		
@@ -197,80 +176,49 @@
 	    return $medium_path;
 	}
 	
-	// Returns all attachments URLs (medium) from a post as an array
-	/*function get_attachment_urls_medium($postID) {
-		$args = array(
-		'post_type' => 'attachment',
-		'numberposts' => null,
-		'post_status' => null,
-		'post_parent' => $postID
-		);
-
-		$attachments = get_children($args);
-		
-		$url_array = array();
-		
-		if ($attachments) {
-			foreach ($attachments as $attachment) { // Loop does this for all attachments in $attachments
-				$url = image_attributes[0]; // First entry in array (0) is the URL
-				array_push($url_array, wp_get_attachment_medium_url($attachment->ID));
-			}
-			return $url_array;
-			
-			/* For loop, if you want to do something with this
-			 * $number_of_entries = count($url_array);
-			 * for ($i=0; $i < $number_of_entries; $i++) {
-				echo '<img src="'.$url_array[$i].'"/> <br />';
-				echo $url_array[$i];
-				echo '<br />';
-			}*/
-			
-		//} //Else no attachment, break(?) naw, return null
-		//return null;
-	//}
-	
+	/*
+	 * GETTING THE X/NTH POSTS AND STUFF
+	 */
 	
 	// Get the first post ID
 	function get_first_post_ID() {
-		query_posts('posts_per_page=1');
-			while (have_posts()) : the_post(); 
-				if (get_post_type() == 'post') { // only posts, not pages
-					return get_the_ID();
-				}
-			endwhile;
+		$args = array(
+			'posts_per_page' => 1,
+			'post_type' => 'post'
+		);
+		query_posts($args);
+		$result = null;
+		while(have_posts()) {
+			the_post();
+			$result = get_the_ID();
+		}
 		wp_reset_query();
+		return $result;
 	}
 
 	// Get the first category for a post (by ID)
 	function get_categories_for_post($id) {
 		$categories = wp_get_post_categories($id);
-		
-		foreach ($categories as $category) {
-			$theCategory = $category;
-			break;
-		}
-		return $theCategory;
+		return $categories[0];
+
 	}
 	
 	// Return ID of the 4 latest posts to use in the next function to check for posts in categories already listed
 	// on the front page
 	function get_four_latest_posts() {
-		$array = array();
-		
-		$string = '&showposts=4'; //Change this number for more posts
-		query_posts($string);
-			while ( have_posts() ) : the_post() ;			
-				if (get_post_type() =='post') {
-					$theID = get_the_ID();
-					array_push($array, $theID);
-				}				
-			endwhile;
+		$result = array();
+		$args = array('showposts' => 4, 'post_type' => 'post');
+		query_posts($args);
+		while (have_posts()) {
+			the_post();	
+			$result[] = get_the_ID();
+		}
 		wp_reset_query();
-		return $array;
+		return $result;
 	}
 	
-	// Echo the latest posts from a category
-	function echo_last_posts_from_category($catid) {
+	// Gets 3 latest posts from a cat and returns an Array
+	function get_3_last_posts_from_category($catid) {
 		$fourLatestPosts = get_four_latest_posts();
 		$counter = 0; // counts posts in the same category
 		foreach ($fourLatestPosts as $entry) {
@@ -278,21 +226,126 @@
 				$counter++;
 			}
 		}
-		
-		$string = 'cat=' . $catid . '&showposts=3&offset=' .$counter; //Change $showposts=x to change the number of links output
-		query_posts($string);
-			while ( have_posts() ) : the_post() ;			
-				if (get_post_type() =='post') {
-					echo('<li><a href="');
-					echo(the_permalink());
-					echo('">');
-					echo(the_title());
-					echo('</a></li>');
-				}				
-			endwhile;
+		$args = array(
+			'cat' => $catid,
+			'showposts' => 3, //Change $showposts=x to change the number of links output
+			'offset' => $counter,
+			'post_type' => 'post'
+		);
+		$postsArray = array();
+		query_posts($args);
+		while (have_posts()) {
+			the_post();
+			// get the id's and chuck them in an array
+			$postsArray[] = get_the_ID();
+		}
 		wp_reset_query();
+		return $postsArray;
+	}
+	
+	// Echo the latest posts from a category
+	function echo_last_posts_from_category($catid) {
+		$postsArray = get_3_last_posts_from_category($catid);
+		foreach ($postsArray as $postID) {
+			echo('<li><a href="');
+			echo(get_permalink($postID));
+			echo(' ">');
+			echo(get_the_title($postID));
+			echo('</a></li>');
+		}
+	}
+	
+	// Returns an array of the first nth posts (change number)
+	// TODO: consider using get_posts() for internal usage
+	function get_first_nth_postids($top) {
+		$allposts = array();
+		query_posts(array('showposts' => $top, 'post_type' => 'post'));
+		while (have_posts()) {
+			the_post();
+			$allposts[] = get_the_ID();
+		}
+		wp_reset_query();
+		return $allposts;
 	}
 
+	// copypasta from http://stackoverflow.com/questions/2690504/php-producing-relative-date-time-from-timestamps
+	// edited: show moar info if later date.
+	function relativeTime($date) {
+		$date = (int) $date;
+	    $now = time();
+	    $diff = $now - $date;
+
+	    if ($diff < 60){
+	        return sprintf($diff > 1 ? '%s seconds ago' : 'a second ago', $diff);
+	    }
+
+	    $diff = floor($diff/60);
+
+	    if ($diff < 60){
+	        return sprintf($diff > 1 ? '%s minutes ago' : 'one minute ago', $diff);
+	    }
+
+	    $diff = floor($diff/60);
+
+	    if ($diff < 24){
+	        return sprintf($diff > 1 ? '%s hours ago' : 'an hour ago', $diff);
+	    }
+
+	    $diff = floor($diff/24);
+
+	    if ($diff < 7){
+	    	$res = sprintf($diff > 1 ? '%s days ago' : 'yesterday', $diff);
+	    	$res += 'at ';
+	    	$res += date('h:i A', $date);
+	    	return $res;
+	    }
+
+ 		// output format for posts more than a week old
+	    return date("F j, Y h:i A", $date);
+	}
+
+	// use this for both articles and forum poasts.
+	function output_highlight_row($title, $link, $date, $categoryLink, $categoryName) {
+		$timestamp = date('l, F j, Y h:i A', $date);
+		$relativeDate = relativeTime($date);
+
+		// check the total length of the date + category, if too long, shorten the category name
+		// to something something chars + ellipsis because I dunno how the fuck to do it in CSS and I fail.
+		$displayCategoryName = $categoryName;
+		if (strlen($categoryName . $relativeDate) > 50) $displayCategoryName = substr($categoryName, 0, 26) . "...";
+
+		// ew
+		printf('<li><a href="%s">%s</a>', $link, $title);
+		printf('<div class="post_meta">');
+		printf('<span class="postdate" title="%s">%s in</span>', $timestamp, $relativeDate);
+		printf(' <span><a href="%s" title="%s">%s</a></span>', $categoryLink, $categoryName, $displayCategoryName);
+		printf('</div></li>');
+	}
+
+	function output_post_for_smaller_preview($post) {
+		$permalink = get_permalink($post);
+		$title = get_the_title($post);
+		$postTimestamp = get_the_time('U', $post);
+		$relativeDate = relativeTime($postTimestamp);
+		$poastdate = get_the_time('l, F j, Y h:i A', $post);
+		$theCategory = get_categories_for_post($post);
+		$poastcat = get_the_category_by_ID($theCategory);
+		$poastcaturl = get_category_link($theCategory);
+		
+		output_highlight_row($title, $permalink, $postTimestamp, $poastcaturl, $poastcat);
+	}
+
+	// Echo the smaller previews (only titles with links) - update function above to change how many
+	function echo_posts_for_smaller_preview() {
+		$firstfifteenposts = get_first_nth_postids(12);
+		$previewposts = array_slice($firstfifteenposts, 4, 8);
+		$bool = true;
+		echo '<ul>';
+		foreach($previewposts as $post) {
+			output_post_for_smaller_preview($post);
+		}
+		echo '</ul>';
+	}
 
 	// Echo the first post preview
 	function echo_first_post_preview($id) {
@@ -338,75 +391,56 @@
 			array_pop($words);
 			$text = implode(' ', $words);
 			$text = $text . $ending;
-			return ''.$text.' '.$superending;
+			return "$text $superending";
 		} else {
 			$text = implode(' ', $words);
-			return '<p>'.$text.'</p>';
+			return "<p>$test</p>";
 		}
 	}
 	
 	// Echo previews A to B
 	function echo_n_post_preview($fromPreviewNo, $toPreviewNo) {
-		$aString = 'posts_per_page=' . (string)$toPreviewNo; // Have to cast int to string
-		query_posts($aString);
-		//$postsArray[] = array("ffo", "bar");
+		query_posts(array('posts_per_page' => $toPreviewNo, 'post_type' => 'post'));
 		$count = 1;
-		while ( have_posts() ) : the_post();
+		while ( have_posts() ) {
+			the_post();
 			if ($count >= $fromPreviewNo) {
-				if (get_post_type() =='post') { // Checks that post is 'post' and not 'page'
-					// Create an array and store the ID's in it
-					//$theID = get_the_ID();
-					//array_push($postsArray, $theID);
-					echo('');
-						$theID = get_the_ID();
-						$theCategory = get_categories_for_post($theID);					
-						echo('</p><div class="mediumimg">');
-						echo('<img src="' . get_featured_image_medium($theID) . '" />');
-						echo('</div>');
-						echo('<p class="previews-stories-category"><a href="' . get_category_link($theCategory) . '">');
-						echo(get_the_category_by_ID($theCategory));
-						echo('</a></p><a href="');
-						echo the_permalink($theID);
-						echo('"><h2>');
-						echo the_title();
-						echo('</h2></a>');
-						//the_excerpt();
-					echo('');
-				}
+				$theID = get_the_ID();
+				$theCategory = get_categories_for_post($theID);					
+				echo('</p><div class="mediumimg">');
+				echo('<img src="' . get_featured_image_medium($theID) . '" />');
+				echo('</div>');
+				echo('<p class="previews-stories-category"><a href="' . get_category_link($theCategory) . '">');
+				echo(get_the_category_by_ID($theCategory));
+				echo('</a></p><a href="');
+				echo the_permalink($theID);
+				echo('"><h2>');
+				echo the_title();
+				echo('</h2></a>');
 			}
 			$count ++;
-		endwhile;
-		//echo($postsArray);
-		//return $postsArray;
-		//echo($postsArray);
+		}
 		wp_reset_query();
 	}
-	
-	
-	// Display the tls_border div. Input: Text to be echoed on top of the border
-	function echo_tls_border($titleOnBorder, $id = "") {
-		if (!empty($id)) {
-			echo '<div id="', $id, '" class="tls_border">';
-		} else {
-			echo('<div class="tls_border">');
-		}
-		echo('<p>' . $titleOnBorder . '</p>');
-		echo('</div>');
-	}
+
+	/*
+	 * FIXXES
+	 */
 
 	// Function found on Internet. Added to be able to add the sidebar to single Posts ("blogposts") as it was
 	// removed as being default in Twenty Eleven - see The Lifestream 4 documentation for sauce
 	add_filter('body_class', 'fix_body_class_for_sidebar', 20, 2);
 	function fix_body_class_for_sidebar($wp_classes, $extra_classes) {
-		if( is_single() ){
+		if (is_single()) {
 		   if (in_array('singular',$wp_classes)){
 				foreach($wp_classes as $key => $value) {
-					if ($value == 'singular')
+					if ($value == 'singular') {
 						unset($wp_classes[$key]);
+					}
 				}
 			}
 		}
-		 return array_merge($wp_classes, (array) $extra_classes);
+		return array_merge($wp_classes, (array) $extra_classes);
 	}
 	
 	/*
@@ -452,58 +486,34 @@
 	// Returns the 10 threads with the latest posts from the forums
 	function forum_get_latest_posts() {
 		include('forumcall.php');
-		
+
 		$query_posts = "
-			select thread.threadid, thread.title, thread.forumid, forum.title, user.userid, thread.lastposter, post.pagetext, thread.views, thread.replycount, thread.lastpostid
+			select thread.threadid, thread.title, thread.forumid, forum.title, thread.lastpost
 			from thread
 			inner join post
 			on post.postid = thread.lastpostid
-			inner join user
-			on user.userid = post.userid
 			inner join forum
 			on forum.forumid = thread.forumid
 			where thread.forumid IN (3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 16, 17, 18, 19, 20, 21, 22, 23, 24, 46, 37, 36, 38, 47, 39, 41, 55, 43, 44, 48, 51, 56, 57, 58, 59, 61, 60, 65, 68)
 			order by thread.lastpost DESC
-			LIMIT 0, 10";
-		
+			LIMIT 0, 8";
+
 		$result = mysql_query($query_posts);
-		
-		if ($result == '') {
-			echo('String is empty');
-			echo('<br />');
-		}
-		
-		//threadid title 	forumid 	title 	userid 	lastposter 	pagetext 	views 	replycount
-		//Ruins your day Mk 2 in General Discussion - posted by Cthulhu (text) 66 views | 66 replies
-		
+
 		$numberofrows = mysql_num_rows($result);
-		$numberofcolumns = mysql_num_fields($result);
-		
-		echo '<ul class="forum-posts">';	
+
+		echo '<ul class="forum-posts">';
 		for ($i = 0; $i < $numberofrows; $i++) {
 			$row = mysql_fetch_row($result);
-			$postbody = substr($row[6], 0, 100);
-			// Preferably also strip the last empty space. And strip away IMG-tags etc
-			
-			$thread = '<a class="forum-thread" href="http://thelifestream.net/forums/showthread.php?goto=newpost&t=' . $row[0] . '">' . $row[1] . '</a>';
-			$forum = '<a class="forum-forum" href="http://thelifestream.net/forums/forumdisplay.php?f=' . $row[2] . '">' . $row[3] . '</a>'; 
-			$user = '<a class="forum-user" href="http://thelifestream.net/forums/viewprofile.php?p=' . $row[4] . '">' . $row[5] . '</a> ';
-			/* echo(' <em>' . $postbody . '...</em> ');*/
-			$views = $row[7] . ' views, ';
-			$replies = $row[8] . ' replies';
-			
-			echo '<li class="post">';
-			
-			//echo($user);
-			//echo('<br />');
-			echo("$thread in $forum");
-			//echo('<br />');
-			//echo($forum);
-			//echo('<br /><br />');
-			echo '</li>';
+			$threadUrl = "http://thelifestream.net/forums/showthread.php?goto=newpost&t={$row[0]}";
+			$title = $row[1];
+			$timestamp = $row[4];
+			$categoryUrl = "http://thelifestream.net/forums/forumdisplay.php?f={$row[2]}";
+			$categoryName = $row[3];
+			output_highlight_row($title, $threadUrl, $timestamp, $categoryUrl, $categoryName);
 		}
 		echo '</ul>';
-		
+
 		include('forumcallclose.php');
 	}
 	

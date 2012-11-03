@@ -6,11 +6,26 @@ Version:		4
 Author:         Fangu, based on TwentyEleven but also on TheLifestream 2.2 by Cthulhu
 Author URI: 	http://TheLifestream.net
 Template:       twentyeleven
-*/
 
+COLORS:
+
+ * #88888F Default font color
+ * #1C1D1D Dark greenish background color
+ * #7FCFCF Bright turquoise (links, etc)
+ * 
+*/
 
 @import url("../twentyeleven/style.css");
 
+/* FONTS */
+/* TODO: download the font and host from TLS. Maybe. */
+
+@font-face {
+  font-family: 'Radley';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Radley'), url(http://themes.googleusercontent.com/static/fonts/radley/v6/fE3I-GlsFHTITnHGmv57XA.woff) format('woff');
+}
 /*
  * BASIC
  */
@@ -31,12 +46,6 @@ li {
 a {
 	color: #7FCFCF;
 }
-
-/*table {
-	border-bottom: 0;
-	border-collapse: separate;
-	border-spacing: 2px;
-}*/
 
 sub {
 	top: none;
@@ -72,22 +81,28 @@ sup, sub {
 
 .tls_border {
 	background: url('http://thelifestream.net/forums/images/tls_border.gif') center;
-	min-height:30px;
-    height:auto !important;
-    height:30px; 
+    height:27px; 
     padding-left: 10%;
+
+    border: 4px solid transparent;
+  	border-top:0;
+  	border-bottom:0;
+    -webkit-border-image: url("images/side-border-short.png") 0 1 0 1 stretch stretch;
+    -moz-border-image: url("images/side-border-short.png") 0 1 0 1 stretch stretch;
+    -o-border-image: url("images/side-border-short.png") 0 1 0 1 stretch stretch;
+    border-image: url("images/side-border-short.png") 0 1 0 1 stretch stretch;
 }
 
-.tls_border p { 
-	font-weight: bold;
-	margin-top: 0.5em;
-	margin-bottom: 0;
-	display: inline-block;
-	vertical-align: baseline;
- }
+.frontpage-primary h3 {
+  margin-left: -9px;
+  display: inline-block;
+  font-family:'Radley';
+  font-size: 20px;
+  /*text-transform: capitalize;*/
+  font-variant: small-caps;
+}
 
 /* The next 3 are exclusive to Lifestream 4 layout: (REMOVE COMMENT) */
-/* TODO: materia icon */
 #featured {
 
 	background: #224545;
@@ -96,14 +111,18 @@ sup, sub {
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#224545), to(#062E2E)); /* older webkit syntax */
 	background: -webkit-linear-gradient(#224545, #062E2E);
 	width: auto;
-	padding: 7px 30px 7px 20px; /* top right bottom left */
+	padding: 7px 30px 7px 5px; /* top right bottom left */
 	margin: 0 4.5% 20px 4.5%;
 	font-size: 12px;
 	color: #7FCFCF;
 }
 
 #featured .textwidget {
-	
+  background-image: url('http://thelifestream.net/forums/images/statusicon/subforum_new.gif');
+  background-size: 15px 15px;
+  background-repeat: no-repeat;
+  background-position:left center;
+  padding-left: 20px;
 }
 
 /* Sidebar */
@@ -252,6 +271,11 @@ sup, sub {
 	border: none;
 }
 
+#bottomstuff a,
+#bottomstuff a:visited {
+	color: #7FCFCF;
+	font-weight: normal;
+}
 
 
 
@@ -304,25 +328,6 @@ img[class*="align"], img[class*="wp-image-"], img {
 	font-size: 100%;
 }
 
-
-/* Table cells */
-.entry-content td {
-	border: 1px solid #ddd;
-	padding: 2px 2px 2px 5px;
-}
-
-.entry-content table {
-	border-bottom: 0;
-	border: none;
-	border-collapse: separate;
-	border-spacing: 2px;
-}
-
-
-
-
-
-
 /* 
 * CSS FOR FRONTPAGE-TEMPLATE CONTENT
 */
@@ -336,6 +341,10 @@ img[class*="align"], img[class*="wp-image-"], img {
 /* Inner wrapping - currently doesn't really do anything but can be utilized */
 .frontpage-content {
 	padding: 2% 0 0 0;
+}
+
+.frontpage-content ul {
+	margin-left: 0.5em;
 }
 
 .frontpage-primary a,
@@ -353,11 +362,20 @@ img[class*="align"], img[class*="wp-image-"], img {
 	font-size: 20px;	
 }
 
-.frontpage-content-left {
-	margin: 3% 2% 0 2%;
+.frontpage-content-left, .frontpage-content-right {
+	margin: 1% 2% 0 0;
 }
 
-.frontpage-content-right {
+.frontpage-content li {
+	margin-bottom: 10px;
+	list-style-image: url('http://thelifestream.net/forums/images/statusicon/subforum_new.gif');
+}
+
+.frontpage-content .post_meta {
+	/*color: #ffffff;*/
+	font-size: 0.9em;
+	padding-left: 18px;
+	white-space:nowrap;
 }
 
 .frontpage-clear {
@@ -369,14 +387,21 @@ img[class*="align"], img[class*="wp-image-"], img {
 }
 .frontpage-highlights .frontpage-primary {
    float:left;
-   width: 400px;
+   margin: 5px 0 10px 4.5%;
+   width: 435px;
    background-color: #080A0A;
-   border: 6px solid #001C1C;
+   border: 4px solid #001C1C;
    border-top: 0;
 }
 
 .frontpage-highlights .frontpage-primary .frontpage-content {
 	padding: 5px 5px 5px 5px;
+}
+
+.frontpage-highlights .frontpage-primary .tls_border {
+  /* position wtfing*/
+  width: 392px;
+  margin-left: -4px;
 }
 /* Previews */
 
@@ -490,6 +515,11 @@ img[class*="align"], img[class*="wp-image-"], img {
 	clear: both;
 }
 
+.findmorenews {
+	margin: 10px 0 15px 0;
+	text-align: right;
+}
+
 /* Forumpulls */
 
 .forum-user {
@@ -570,15 +600,29 @@ img[class*="align"], img[class*="wp-image-"], img {
 /* Main menu */
 
 #access {
-  /*background: #1E1E1E;*/
+  
+  width: 1016px;
+  margin-bottom: 0;
+
   background: #222; /* Show a solid color for older browsers */
   background: -moz-linear-gradient(#252525, #0a0a0a);
   background: -o-linear-gradient(#252525, #0a0a0a);
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#252525), to(#0a0a0a)); /* older webkit syntax */
   background: -webkit-linear-gradient(#252525, #0a0a0);
+
   box-shadow: 0;
   -moz-box-shadow:0;
   -webkit-box-shadow:0;
+
+  /* just defining border-style apparently isn't enough in Firefox. Meh. */
+  border: 4px solid transparent;
+  border-top:0;
+  border-bottom:0;
+
+  -webkit-border-image: url("images/side-border-tall.png") 0 1 0 1 stretch stretch;
+  -o-border-image: url("images/side-border-tall.png") 0 1 0 1 stretch stretch;
+  -moz-border-image: url("images/side-border-tall.png") 0 1 0 1 stretch stretch;
+  border-image: url("images/side-border-tall.png") 0 1 0 1 stretch stretch;
 }
 
 #access div {
@@ -586,10 +630,18 @@ img[class*="align"], img[class*="wp-image-"], img {
 }
 
 #access a {
-  color: #7FCFCF;
+  color: #bccfcf;
+  font-family:'Radley';
+  font-size: 21px;
+  text-transform: capitalize;
+  font-variant: small-caps;
+  line-height: 2.333em;
 }
 
 #access li.menu-item .sub-menu a {
+  font: 14px Verdana, Sans-Serif;
+  text-transform:none;
+  font-variant:none;
   background-color: #1E1E1E;
   color: #7FCFCF;
 }
@@ -609,6 +661,38 @@ img[class*="align"], img[class*="wp-image-"], img {
 
 #access ul.sub-menu li:hover > a {
   border-bottom: 1px solid #7CCACA;
+}
+
+#access .sub-menu {
+  /*top: 3.73em;  highly tuned very specific value for perfect positioning justice */
+}
+
+/* Search form */
+
+
+/* RSS icon */
+
+#rss-icon {
+  float: right;
+  position: absolute;
+  right: 25px;
+  margin-top: 7px;
+}
+
+#rss-icon a {
+  background-image: url('images/rss.png');
+  display:block;
+  width:28px;
+  height:28px;
+}
+
+/* Main page */
+
+#main, #colophon {
+  border-left: 4px solid #001C1C;
+  border-right: 4px solid #001C1C;
+  /* trick to make the div extend around the floating highlight divs */
+  overflow:hidden;
 }
 
 /* COMMENTS */
@@ -702,3 +786,105 @@ a.comment-reply-link:hover {
   border-radius: 3px;
 }
 
+/* /news comments bubble thing */
+
+.entry-header .comments-link a {
+  background: #C3C3C0 url('images/comment-bubble.png') no-repeat;
+  color: black;
+}
+
+.entry-header .comments-link a:hover,
+.entry-header .comments-link a:focus,
+.entry-header .comments-link a:active {
+  background-color: #C3C3C0;
+  text-decoration:underline;
+  color: black;
+}
+
+/* fix nav-next thing in chrome */
+#nav-single .nav-next {
+  padding-left:0;
+} 
+
+.entry-content th, .comment-content th {
+  line-height: 1.8em;
+  font-weight: bold;
+}
+
+/* in-post styles */
+
+.entry-content h3 {
+ font-family: 'Trebuchet MS';
+ font-weight: bold;
+ text-transform:none;
+ font-size: 1.3em;
+}
+
+/* hide author info, 
+
+/* Tables */
+
+.entry-content table {
+  border-width: 1px;
+  border-spacing: 2px;
+  border-style: solid;
+  border-collapse: collapse;
+  border-color: #ddd;
+  width:auto;
+}
+
+.entry-content th, .entry-content td {
+  border: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ddd;
+  padding: 2px 5px 2px 5px;
+}
+
+.entry-content th, .comment-content th {
+  line-height: 1.8em;
+  font-weight: bold;
+}
+
+/* specialized table styles */
+
+span.table-header {
+  color: #666;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: -19px;
+  display:block;
+}
+.entry-content table.centered-content td, .entry-content table.centered-content th {
+  text-align:center;
+}
+
+.entry-content table.no-borders, .entry-content table.no-borders td, .entry-content table.no-borders th {
+  border: 0;
+}
+
+/*
+used text: regular / bold test
+unlockable unused text: regular / normal text
+locked text: thick border / normal text
+*/
+
+.entry-content table.used-text, .entry-content table.used-text td, .entry-content table.used-text th {
+  font-weight: bold;
+}
+
+.entry-content table.unlockable-text, .entry-content table.unlockable-text td, .entry-content table.unlockable-text th {
+  /* nothing here */
+}
+
+.entry-content table.locked-text {
+  border-style: inset;
+  border-width: 4px;
+}
+
+.entry-content table.locked-text td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
